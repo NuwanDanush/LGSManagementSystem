@@ -29,4 +29,18 @@ public class AboutController implements Initializable{
         stage.setX(event.getScreenX() - x);
         stage.setY(event.getScreenY() - y);
     }
+    @FXML
+    ImageView img_frme;
+
+    @FXML
+    void btntoback(MouseEvent event) throws IOException {
+
+        //load dashboard
+        Parent root = FXMLLoader.load(getClass().getResource("/lgsapp/views/dashbord.fxml"));
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setFullScreen (true);
+    }
+    
 }
