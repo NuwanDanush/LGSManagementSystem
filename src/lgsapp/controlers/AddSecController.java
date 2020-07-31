@@ -29,5 +29,21 @@ public class AddSecController implements Initializable{
 
 
     }
+    @FXML
+    void saveInfo(MouseEvent event) throws IOException {
+       /* Parent root = FXMLLoader.load(getClass().getResource("/lgsapp/views/home.fxml"));
+
+        Node node = (Node) event.getSource();
+
+        Stage stage = (Stage) node.getScene().getWindow();
+
+        stage.setScene(new Scene(root));
+
+        stage.setFullScreen (true);
+*/
+
+
+    }
+
 
 }
