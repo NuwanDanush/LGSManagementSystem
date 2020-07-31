@@ -42,5 +42,13 @@ public class AboutController implements Initializable{
         stage.setScene(new Scene(root));
         stage.setFullScreen (true);
     }
-    
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+
+
+      //  Image image = new Image("lgsapp/myicons/look.png");  //refresh image view
+       // img_frme.setImage(image);
+
+    }
 }
