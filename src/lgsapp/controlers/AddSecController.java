@@ -58,5 +58,27 @@ public class AddSecController implements Initializable{
 
     }
 
+    double x = 0, y =0;
+    @FXML
+    void pressed(MouseEvent event) {
+        x = event.getSceneX();
+        y = event.getSceneY();
+    }
+
+    @FXML
+    void dragged(MouseEvent event) {
+
+        Node node = (Node) event.getSource();
+
+        Stage stage = (Stage) node.getScene().getWindow();
+
+        stage.setX(event.getScreenX() - x);
+        stage.setY(event.getScreenY() - y);
+    }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
 
 }
