@@ -14,3 +14,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+public class DashbordControll implements Initializable {
+    @FXML
+    private Button btnDashboard;
+
+    @FXML
+    private Button btnAddSec;
+
+    @FXML
+    private Button btn_help;
+}
