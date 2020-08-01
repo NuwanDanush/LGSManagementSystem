@@ -34,8 +34,9 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
+
 public class HomeController implements Initializable {
-    private File selectedFile = null;
+    private File selectedFile =null;
     private FileInputStream fis;
 
     Connection con = DbConnect.getConnection();
@@ -44,7 +45,7 @@ public class HomeController implements Initializable {
     private Desktop desktop = Desktop.getDesktop();
     private String imageFile;
 
-    // define row clicked variables
+    //define row clicked variables
     String clickfname;
     String clicklname;
     String clickoffice;
@@ -157,39 +158,52 @@ public class HomeController implements Initializable {
     @FXML
     private TextField txtsearchyr;
 
-    ObservableList<Secratary> oblist = FXCollections.observableArrayList(); // get data from model
+
+
+    ObservableList<Secratary> oblist = FXCollections.observableArrayList(); //get data from model
+
+
+
 
     @FXML
     private ImageView img_frame;
 
+
+
+
+
+
+
+
     @FXML
-    void uploadPic(MouseEvent event) throws IOException { // using file chooser
+    void uploadPic(MouseEvent event) throws IOException {    //using file chooser
 
         handle_load();
 
     }
 
+
+
+
     @FXML
-    public void handle_load() throws MalformedURLException { // to select image on hdd and set it to the image view
+    public void handle_load() throws MalformedURLException {  //to select image on hdd and set it to the image view
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Image File");
-        fileChooser.getExtensionFilters()
-                .addAll(new FileChooser.ExtensionFilter("Image Files", "*.bmp", "*.png", "*.jpg", "*.gif")); // limit
-                                                                                                             // fileChooser
-                                                                                                             // options
-                                                                                                             // to image
-                                                                                                             // files
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files",
+                        "*.bmp", "*.png", "*.jpg", "*.gif")); // limit fileChooser options to image files
         selectedFile = fileChooser.showOpenDialog(new Stage());
 
         if (selectedFile != null) {
 
             imageFile = selectedFile.toURI().toURL().toString();
-            System.out.println("the path is>>>>>>>" + imageFile + ">>>>>>>");
+            System.out.println("the path is>>>>>>>"+imageFile+">>>>>>>");
 
-            Image image = new Image(imageFile);
-            img_frame.setImage(image);
+           Image image = new Image(imageFile);
+           img_frame.setImage(image);
         } else {
+
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
@@ -200,7 +214,7 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    void addInfo(MouseEvent event) throws IOException { // add secretary infos
+    void addInfo(MouseEvent event) throws IOException {  // add secretary infos
         String firstname = txtFirstname.getText();
         String lastname = txtLastname.getText();
         String wop = txtWOP.getText();
@@ -219,21 +233,24 @@ public class HomeController implements Initializable {
         String chpe = getchkboxData(chkPe);
         String incremantal = getIncremantal();
 
-        if (selectedFile == null) {
+        if(selectedFile == null){
             fis = null;
-        } else {
-            fis = new FileInputStream(selectedFile);// get the image file
+        }
+        else {
+            fis = new FileInputStream(selectedFile);//get the image file
 
         }
 
-        // secratary = new Secratary();
 
-        // PreparedStatement ps =
-        // secratary.addsecretary(firstname,lastname,wop,office,contact,email,gender,bday,fappdate,upgrade,retdate,incdate,incremantal,chpb,chpm,chpe,fis,curyr);
-        Connection con = DbConnect.getConnection();
-        PreparedStatement ps = null;
+       // secratary = new Secratary();
+
+       // PreparedStatement ps = secratary.addsecretary(firstname,lastname,wop,office,contact,email,gender,bday,fappdate,upgrade,retdate,incdate,incremantal,chpb,chpm,chpe,fis,curyr);
+         Connection con = DbConnect.getConnection();
+         PreparedStatement ps = null;
 
         String query = "INSERT INTO `secrataries`( `fname`, `lname`, `wop`, `office`, `contact`, `email`, `gender`, `bday`, `fappdate`, `upgdate`, `retdate`, `incdate`, `salinc`, `yrbeg`, `yrmid`, `yrend`, `imageid`, `curyr`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+
 
         try {
             ps = con.prepareStatement(query);
@@ -253,8 +270,14 @@ public class HomeController implements Initializable {
             ps.setString(14, chpb);
             ps.setString(15, chpm);
             ps.setString(16, chpe);
-            ps.setBinaryStream(17, (InputStream) fis, (int) selectedFile.length());
+            ps.setBinaryStream(17,(InputStream)fis,(int)selectedFile.length());
             ps.setString(18, curyr);
+
+
+
+
+
+
 
             if (ps.executeUpdate() > 0) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -267,7 +290,8 @@ public class HomeController implements Initializable {
             e.printStackTrace();
         }
     }
-    public String getchkboxData(CheckBox checkBox){  ///to get the data from check box
+
+     public String getchkboxData(CheckBox checkBox){  ///to get the data from check box
         String value = "";
         if (checkBox.isSelected()){
             value = "yes";
@@ -352,4 +376,329 @@ public class HomeController implements Initializable {
 
 
 
+
+
+
+
+   //update secretary information
+
+    @FXML
+    void editInfo(MouseEvent event) throws IOException {
+
+
+        try {
+
+            String firstname = txtFirstname.getText();
+            String lastname = txtLastname.getText();
+            String wop = txtWOP.getText();
+            String contact = txtContact.getText();
+            String email = txtEmail.getText();
+            String gender = cmbGender.getSelectionModel().getSelectedItem().toString();
+            String office = cmbOffice.getSelectionModel().getSelectedItem().toString();
+            String curyr = cmbCuryr.getSelectionModel().getSelectedItem().toString();
+            String bday = txtBirthday.getValue().toString();
+            String fappdate = txtFirstAppdate.getValue().toString();
+            String upgrade = txtUpgrading.getValue().toString();
+            String retdate = txtRetirement.getValue().toString();
+            String incdate = txtIncrement.getValue().toString();
+            String chpb = getchkboxData(chkPb);
+            String chpm = getchkboxData(chkPm);
+            String chpe = getchkboxData(chkPe);
+            String incremantal = getIncremantal();
+
+            if(selectedFile == null){
+                fis = null;
+            }
+            else {
+                fis = new FileInputStream(selectedFile);//get the image file
+
+            }
+
+            boolean emailvalid = isValidEmailAddress(email); //for valid email address
+            boolean valid = true;
+
+
+            //form validations
+
+            if(curyr.isEmpty()){
+                valid = false;
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Modify info Error");
+                String s = "Please enter the Current Year";
+                alert.setContentText(s);
+                alert.showAndWait();
+
+            }
+
+            else if(firstname.isEmpty() && lastname.isEmpty()){
+                valid = false;
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Modify info Error");
+                String s = "Please enter the name";
+                alert.setContentText(s);
+                alert.showAndWait();
+
+            }
+
+            else if(!email.isEmpty() && !emailvalid){
+                valid = false;
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Modify info Fail");
+                String s = "The Email is not valid";
+                alert.setContentText(s);
+                alert.showAndWait();
+            }
+
+
+            else if(!contact.isEmpty() && contact.length()!=10){
+                valid = false;
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Modify info Fail");
+                String s = "Please enter the valid phone number";
+                alert.setContentText(s);
+                alert.showAndWait();
+
+            }
+
+            else if(office.isEmpty()){
+                valid = false;
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Modify info Fail");
+                String s = "Please enter the Divisional office";
+                alert.setContentText(s);
+                alert.showAndWait();
+
+            }
+
+
+
+
+
+            else {
+
+                try {
+
+                    // secratary = new Secratary();
+                    // PreparedStatement ps = secratary.addsecretary(firstname,lastname,wop,office,contact,email,gender,bday,fappdate,upgrade,retdate,incdate,incremantal,chpb,chpm,chpe,fis,curyr);
+
+                    PreparedStatement ps = null;
+
+                    String query = "UPDATE `secratary` SET `fname`=?,`lname`=?,`wop`=?,`office`=?,`contact`=?,`email`=?,`gender`=?,`bday`=?,`fappdate`=?,`upgdate`=?,`retdate`=?,`incdate`=?,`salinc`=?,`yrbeg`=?,`yrmid`=?,`yrend`=?,`imageid`=?,`curyr`=? WHERE `fname`=? AND `lname` = ? AND  `office` =? AND `curyr` =?";
+
+
+
+                    ps = con.prepareStatement(query);
+                    ps.setString(1, firstname);
+                    ps.setString(2, lastname);
+                    ps.setString(3, wop);
+                    ps.setString(4, office);
+                    ps.setString(5, contact);
+                    ps.setString(6, email);
+                    ps.setString(7, gender);
+                    ps.setString(8, bday);
+                    ps.setString(9, fappdate);
+                    ps.setString(10, upgrade);
+                    ps.setString(11, retdate);
+                    ps.setString(12, incdate);
+                    ps.setString(13, incremantal);
+                    ps.setString(14, chpb);
+                    ps.setString(15, chpm);
+                    ps.setString(16, chpe);
+
+                    if (selectedFile == null){
+                        ps.setBinaryStream(17, null ,0);
+                    }
+                    else {
+                        ps.setBinaryStream(17, (InputStream) fis, (int) selectedFile.length());
+
+                    }
+                    ps.setString(18, curyr);
+                    ps.setString(19, clickfname);
+                    ps.setString(20, clicklname);
+                    ps.setString(21, clickoffice);
+                    ps.setString(22, clicksrchyr);
+
+
+                    if (ps.executeUpdate() > 0) {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Successfully Modified");
+                        String s = "Successfully Modified.";
+
+                        alert.setContentText(s);
+                        alert.showAndWait();
+
+
+                        String srchyr = txtsearchyr.getText();
+                        tblData.getItems().clear(); //clear all early data
+                        refreshtable(srchyr);  //refresh the table view
+
+                       Image image = new Image("lgsapp/myicons/icons8-administrator-male-80.png");  //refresh image view
+                        img_frame.setImage(image);
+
+                        txtFirstname.setText("");
+                        txtLastname.setText("");
+                        txtWOP.setText("");
+                        txtContact.setText("");
+                        txtEmail.setText("");
+                        cmbCuryr.setValue(null);
+                        cmbGender.setValue(null);
+                        cmbOffice.setValue(null);
+
+                        txtBirthday.setValue(null);
+                        txtFirstAppdate.setValue(null);
+                        txtUpgrading.setValue(null);
+                        txtRetirement.setValue(null);
+                        txtIncrement.setValue(null);
+
+                        chkPb.setSelected(false);
+                        chkPm.setSelected(false);
+                        chkPe.setSelected(false);
+
+
+
+                    }
+                } catch (SQLException e) {
+
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Modify info Fail");
+                    String s = "Already added this some informations";
+                    alert.setContentText(s);
+                    alert.showAndWait();
+                    e.printStackTrace();
+                }
+
+            }
+        } catch (Exception e) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Modify info Fail");
+            String s = "Essential fields are not completed";
+            alert.setContentText(s);
+            alert.showAndWait();
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+   //delete the selected record
+
+    @FXML
+    void deleteInfo(MouseEvent event) throws IOException {
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION); //confirmation alert
+        alert.setTitle("Delete Secretary");
+        String s = "Are You Sure Want to delete a secretary..!";
+        alert.setContentText(s);
+        Optional<ButtonType> result = alert.showAndWait();
+        if ((result.isPresent()) && (result.get() == ButtonType.OK)) {
+
+            String query = "DELETE FROM `secratary` WHERE `fname` = ? AND `lname` = ? AND `office` = ? AND `curyr` = ?";
+            try {
+                PreparedStatement ps = con.prepareStatement(query);
+                ps.setString(1, clickfname);
+                ps.setString(2, clicklname);
+                ps.setString(3, clickoffice);
+                ps.setString(4, clicksrchyr);
+
+                if (ps.executeUpdate() > 0) {
+
+
+                    String srchyr = txtsearchyr.getText();
+                    tblData.getItems().clear(); //clear all early data
+                    refreshtable(srchyr);  //refresh the table view
+
+                    Image image = new Image("lgsapp/myicons/icons8-administrator-male-80.png");  //refresh image view
+                    img_frame.setImage(image);
+
+                    txtFirstname.setText("");
+                    txtLastname.setText("");
+                    txtWOP.setText("");
+                    txtContact.setText("");
+                    txtEmail.setText("");
+                    cmbCuryr.setValue(null);
+                    cmbGender.setValue(null);
+                    cmbOffice.setValue(null);
+
+                    txtBirthday.setValue(null);
+                    txtFirstAppdate.setValue(null);
+                    txtUpgrading.setValue(null);
+                    txtRetirement.setValue(null);
+                    txtIncrement.setValue(null);
+
+                    chkPb.setSelected(false);
+                    chkPm.setSelected(false);
+                    chkPe.setSelected(false);
+
+
+                }
+            } catch (SQLException e) {
+
+
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+
+
+
+
+
+
+    @FXML
+    void go(MouseEvent event) throws IOException {  //load the table
+
+        String srchyr = txtsearchyr.getText();
+
+        if(srchyr.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Table loading fail");
+            String s = "Please enter the Year what you want view";
+            alert.setContentText(s);
+            alert.showAndWait();
+
+        }
+        else {
+            tblData.getItems().clear(); //clear all early data
+            refreshtable(srchyr); //load again
+        }
+
+    }
+
+    @FXML
+    void exitTomain(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/lgsapp/views/dashbord.fxml"));
+
+        Node node = (Node) event.getSource();
+
+        Stage stage = (Stage) node.getScene().getWindow();
+
+        stage.setScene(new Scene(root));
+
+        stage.setFullScreen (true);
+
+    }
+
+
+
+
+
+
+
+
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 }
