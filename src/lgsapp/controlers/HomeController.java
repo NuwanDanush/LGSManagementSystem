@@ -267,5 +267,89 @@ public class HomeController implements Initializable {
             e.printStackTrace();
         }
     }
+    public String getchkboxData(CheckBox checkBox){  ///to get the data from check box
+        String value = "";
+        if (checkBox.isSelected()){
+            value = "yes";
+        }
+        else{
+            value = "no";
+        }
+        return value;
+    }
+
+    public String getIncremantal(){  //to get the data from radio btn
+        String value = "";
+        if (radioyes.isSelected()){
+            value = "yes";
+        }
+        else{
+            value = "no";
+        }
+        return value;
+    }
+
+
+
+    public boolean isValidEmailAddress(String email) {  //for email validation
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
+    }
+
+
+
+
+
+
+
+
+    //to fill the table view
+    public void refreshtable(String year){
+        String query = "SELECT  `fname`, `lname`, `wop`, `office`, `contact`, `bday`, `fappdate`, `upgdate`, `retdate`, `incdate`, `salinc`, `yrbeg`, `yrmid`, `yrend` FROM `secratary` WHERE `curyr` =?";
+        try {
+            PreparedStatement  ps = con.prepareStatement(query);
+            ps.setString(1,year);
+            ResultSet rs = ps.executeQuery();
+
+
+            while (rs.next()){
+                oblist.add(new Secratary(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),
+                        rs.getString(7),rs.getString(8),rs.getString(9),rs.getString(10),rs.getString(11),
+                        rs.getString(12),rs.getString(13),rs.getString(14)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        colfname.setCellValueFactory(new PropertyValueFactory<>("fname"));
+        collname.setCellValueFactory(new PropertyValueFactory<>("lname"));
+        colwop.setCellValueFactory(new PropertyValueFactory<>("wop"));
+        coloffice.setCellValueFactory(new PropertyValueFactory<>("office"));
+        colcontact.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        colbday.setCellValueFactory(new PropertyValueFactory<>("bday"));
+        colfappdate.setCellValueFactory(new PropertyValueFactory<>("fappdate"));
+        colupgdate.setCellValueFactory(new PropertyValueFactory<>("upgradedate"));
+        colretdate.setCellValueFactory(new PropertyValueFactory<>("retdate"));
+        colincdate.setCellValueFactory(new PropertyValueFactory<>("incdate"));
+        colinc.setCellValueFactory(new PropertyValueFactory<>("inc"));
+        colbeg.setCellValueFactory(new PropertyValueFactory<>("beg"));
+        colmid.setCellValueFactory(new PropertyValueFactory<>("mid"));
+        colend.setCellValueFactory(new PropertyValueFactory<>("end"));
+
+        tblData.setItems(oblist); //set the oblist to table view
+
+
+
+
+    }
+
+
+
 
 }
