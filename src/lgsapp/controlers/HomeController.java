@@ -34,8 +34,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
-public class HomeController implements Initializable{
-    private File selectedFile =null;
+public class HomeController implements Initializable {
+    private File selectedFile = null;
     private FileInputStream fis;
 
     Connection con = DbConnect.getConnection();
@@ -44,7 +44,7 @@ public class HomeController implements Initializable{
     private Desktop desktop = Desktop.getDesktop();
     private String imageFile;
 
-    //define row clicked variables
+    // define row clicked variables
     String clickfname;
     String clicklname;
     String clickoffice;
@@ -157,16 +157,115 @@ public class HomeController implements Initializable{
     @FXML
     private TextField txtsearchyr;
 
-
-
-    ObservableList<Secratary> oblist = FXCollections.observableArrayList(); //get data from model
-
-
-
+    ObservableList<Secratary> oblist = FXCollections.observableArrayList(); // get data from model
 
     @FXML
     private ImageView img_frame;
 
+    @FXML
+    void uploadPic(MouseEvent event) throws IOException { // using file chooser
 
+        handle_load();
+
+    }
+
+    @FXML
+    public void handle_load() throws MalformedURLException { // to select image on hdd and set it to the image view
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Image File");
+        fileChooser.getExtensionFilters()
+                .addAll(new FileChooser.ExtensionFilter("Image Files", "*.bmp", "*.png", "*.jpg", "*.gif")); // limit
+                                                                                                             // fileChooser
+                                                                                                             // options
+                                                                                                             // to image
+                                                                                                             // files
+        selectedFile = fileChooser.showOpenDialog(new Stage());
+
+        if (selectedFile != null) {
+
+            imageFile = selectedFile.toURI().toURL().toString();
+            System.out.println("the path is>>>>>>>" + imageFile + ">>>>>>>");
+
+            Image image = new Image(imageFile);
+            img_frame.setImage(image);
+        } else {
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Please Select valid image File");
+            alert.showAndWait();
+        }
+
+    }
+
+    @FXML
+    void addInfo(MouseEvent event) throws IOException { // add secretary infos
+        String firstname = txtFirstname.getText();
+        String lastname = txtLastname.getText();
+        String wop = txtWOP.getText();
+        String contact = txtContact.getText();
+        String email = txtEmail.getText();
+        String gender = cmbGender.getSelectionModel().getSelectedItem().toString();
+        String office = cmbOffice.getSelectionModel().getSelectedItem().toString();
+        String curyr = cmbCuryr.getSelectionModel().getSelectedItem().toString();
+        String bday = txtBirthday.getValue().toString();
+        String fappdate = txtFirstAppdate.getValue().toString();
+        String upgrade = txtUpgrading.getValue().toString();
+        String retdate = txtRetirement.getValue().toString();
+        String incdate = txtIncrement.getValue().toString();
+        String chpb = getchkboxData(chkPb);
+        String chpm = getchkboxData(chkPm);
+        String chpe = getchkboxData(chkPe);
+        String incremantal = getIncremantal();
+
+        if (selectedFile == null) {
+            fis = null;
+        } else {
+            fis = new FileInputStream(selectedFile);// get the image file
+
+        }
+
+        // secratary = new Secratary();
+
+        // PreparedStatement ps =
+        // secratary.addsecretary(firstname,lastname,wop,office,contact,email,gender,bday,fappdate,upgrade,retdate,incdate,incremantal,chpb,chpm,chpe,fis,curyr);
+        Connection con = DbConnect.getConnection();
+        PreparedStatement ps = null;
+
+        String query = "INSERT INTO `secrataries`( `fname`, `lname`, `wop`, `office`, `contact`, `email`, `gender`, `bday`, `fappdate`, `upgdate`, `retdate`, `incdate`, `salinc`, `yrbeg`, `yrmid`, `yrend`, `imageid`, `curyr`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        try {
+            ps = con.prepareStatement(query);
+            ps.setString(1, firstname);
+            ps.setString(2, lastname);
+            ps.setString(3, wop);
+            ps.setString(4, office);
+            ps.setString(5, contact);
+            ps.setString(6, email);
+            ps.setString(7, gender);
+            ps.setString(8, bday);
+            ps.setString(9, fappdate);
+            ps.setString(10, upgrade);
+            ps.setString(11, retdate);
+            ps.setString(12, incdate);
+            ps.setString(13, incremantal);
+            ps.setString(14, chpb);
+            ps.setString(15, chpm);
+            ps.setString(16, chpe);
+            ps.setBinaryStream(17, (InputStream) fis, (int) selectedFile.length());
+            ps.setString(18, curyr);
+
+            if (ps.executeUpdate() > 0) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Successfully Saved");
+                String s = "Successfully Registered.";
+                alert.setContentText(s);
+                alert.showAndWait();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
