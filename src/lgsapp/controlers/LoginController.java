@@ -72,13 +72,6 @@ public class LoginController implements Initializable{
                String s = "Enter The valid user name or password ";
                alert.setContentText(s);
                alert.showAndWait();
-
-
-
-
-
-
-
        }
 
 
@@ -86,6 +79,23 @@ public class LoginController implements Initializable{
            System.out.println("Login fail with sqlite error");
            System.out.println(e);
        }
+   }
+   double x = 0, y =0;
+   @FXML
+   void pressed(MouseEvent event) {
+       x = event.getSceneX();
+       y = event.getSceneY();
+   }
+
+   @FXML
+   void dragged(MouseEvent event) {
+
+       Node node = (Node) event.getSource();
+
+       Stage stage = (Stage) node.getScene().getWindow();
+
+       stage.setX(event.getScreenX() - x);
+       stage.setY(event.getScreenY() - y);
    }
 
 
