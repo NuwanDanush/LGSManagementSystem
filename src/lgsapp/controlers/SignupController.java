@@ -39,5 +39,25 @@ public class SignupController implements Initializable {
         x = event.getSceneX();
         y = event.getSceneY();
     }
+    @FXML
+    void dragged(MouseEvent event) {
 
+        Node node = (Node) event.getSource();
+
+        Stage stage = (Stage) node.getScene().getWindow();
+
+        stage.setX(event.getScreenX() - x);
+        stage.setY(event.getScreenY() - y);
+    }
+
+    @FXML
+    void btnlogin(MouseEvent event) throws IOException {
+
+        //load dashboard
+        Parent root = FXMLLoader.load(getClass().getResource("/lgsapp/views/dashbord.fxml"));
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setFullScreen (true);
+    }
 }
