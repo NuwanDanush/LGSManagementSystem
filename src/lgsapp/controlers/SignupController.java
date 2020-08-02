@@ -21,6 +21,7 @@ import java.sql.*;
 import java.util.ResourceBundle;
 
 public class SignupController implements Initializable {
+
     Connection con = DbConnect.getConnection();
 
     @FXML
@@ -39,6 +40,7 @@ public class SignupController implements Initializable {
         x = event.getSceneX();
         y = event.getSceneY();
     }
+
     @FXML
     void dragged(MouseEvent event) {
 
@@ -59,7 +61,12 @@ public class SignupController implements Initializable {
         Stage stage = (Stage) node.getScene().getWindow();
         stage.setScene(new Scene(root));
         stage.setFullScreen (true);
+
+
+
+
     }
+
     @FXML
     void signup(MouseEvent event) {
 
@@ -192,4 +199,44 @@ public class SignupController implements Initializable {
 
     }
 
+    public boolean isValidEmailAddress(String email) {  //for email validation
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+             String myuname = LoginController.getMyusername();
+             PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement("SELECT * FROM users WHERE username=? ");
+            ps.setString(1,myuname);
+
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                txt_uname.setText(myuname);
+                txt_email.setText(rs.getString(2));
+                txt_password.setText(rs.getString(3));
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+
+
+
+    }
 }
