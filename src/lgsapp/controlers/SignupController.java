@@ -19,3 +19,25 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
+
+public class SignupController implements Initializable {
+    Connection con = DbConnect.getConnection();
+
+    @FXML
+    private TextField txt_uname;
+
+    @FXML
+    private TextField txt_email;
+
+    @FXML
+    private PasswordField txt_password;
+
+    double x = 0, y = 0;
+
+    @FXML
+    void pressed(MouseEvent event) {
+        x = event.getSceneX();
+        y = event.getSceneY();
+    }
+
+}
