@@ -18,3 +18,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
+
+public class LoginController implements Initializable{
+    @FXML
+    private TextField tf_username;
+
+    @FXML
+    private PasswordField pf_password;
+
+}
