@@ -1,6 +1,5 @@
 package lgsapp.controlers;
 
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,7 +18,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable{
+public class LoginController implements Initializable {
     @FXML
     private TextField tf_username;
 
@@ -28,7 +27,6 @@ public class LoginController implements Initializable{
 
     @FXML
     void btnlogin(MouseEvent event) throws SQLException, IOException {
-
 
         String username, password;
         PreparedStatement ps;
@@ -40,63 +38,83 @@ public class LoginController implements Initializable{
 
         Connection con = DbConnect.getConnection();
 
-       try {
-           ps = con.prepareStatement("SELECT * FROM users WHERE username=? AND password =?");
-           ps.setString(1,username);
-           ps.setString(2, password);
-           ResultSet rs = ps.executeQuery();
+        try {
+            ps = con.prepareStatement("SELECT * FROM users WHERE username=? AND password =?");
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
 
-           String msg = "Text saved: ";
-           
-           if (rs.next()) {
-               System.out.print("Login Sucess");
-               Parent root = FXMLLoader.load(getClass().getResource("/lgsapp/views/dashbord.fxml"));
+            String msg = "Text saved: ";
 
-               Node node = (Node) event.getSource();
+            if (rs.next()) {
+                System.out.print("Login Sucess");
+                Parent root = FXMLLoader.load(getClass().getResource("/lgsapp/views/dashbord.fxml"));
 
-               Stage stage = (Stage) node.getScene().getWindow();
+                Node node = (Node) event.getSource();
 
-               stage.setScene(new Scene(root));
+                Stage stage = (Stage) node.getScene().getWindow();
 
-               stage.setFullScreen (true);
+                stage.setScene(new Scene(root));
 
-           } else {
+                stage.setFullScreen(true);
 
+            } else {
 
-               System.out.print("Login fail");
+                System.out.print("Login fail");
 
-               //Add dialog box
+                // Add dialog box
 
-               Alert alert = new Alert(Alert.AlertType.ERROR);
-               alert.setTitle("Login Error");
-               String s = "Enter The valid user name or password ";
-               alert.setContentText(s);
-               alert.showAndWait();
-       }
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Login Error");
+                String s = "Enter The valid user name or password ";
+                alert.setContentText(s);
+                alert.showAndWait();
+            }
 
+        } catch (Exception e) {
+            System.out.println("Login fail with sqlite error");
+            System.out.println(e);
+        }
+    }
 
-       } catch (Exception e) {
-           System.out.println("Login fail with sqlite error");
-           System.out.println(e);
-       }
-   }
-   double x = 0, y =0;
-   @FXML
-   void pressed(MouseEvent event) {
-       x = event.getSceneX();
-       y = event.getSceneY();
-   }
+    double x = 0, y = 0;
 
-   @FXML
-   void dragged(MouseEvent event) {
+    @FXML
+    void pressed(MouseEvent event) {
+        x = event.getSceneX();
+        y = event.getSceneY();
+    }
 
-       Node node = (Node) event.getSource();
+    @FXML
+    void dragged(MouseEvent event) {
 
-       Stage stage = (Stage) node.getScene().getWindow();
+        Node node = (Node) event.getSource();
 
-       stage.setX(event.getScreenX() - x);
-       stage.setY(event.getScreenY() - y);
-   }
+        Stage stage = (Stage) node.getScene().getWindow();
 
+        stage.setX(event.getScreenX() - x);
+        stage.setY(event.getScreenY() - y);
+    }
+
+    @FXML
+    void linksignup(MouseEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/lgsapp/views/signup.fxml"));
+
+        Node node = (Node) event.getSource();
+
+        Stage stage = (Stage) node.getScene().getWindow();
+
+        stage.setScene(new Scene(root));
+
+    }
+
+    public static String getMyusername() {
+        return myusername;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 
 }
