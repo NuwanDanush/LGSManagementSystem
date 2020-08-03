@@ -40,4 +40,21 @@ public class TitleBarController implements Initializable {
         stage.setFullScreen(true);
 
     }
+    @FXML
+    void min(MouseEvent event) {
+
+        Node node = (Node) event.getSource();
+
+
+        Stage stage = (Stage) node.getScene().getWindow();
+
+        stage.setIconified(true);
+
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 }
