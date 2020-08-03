@@ -80,4 +80,14 @@ public final class TestController extends Application {
                 new FileChooser.ExtensionFilter("JPG", "*.jpg"), new FileChooser.ExtensionFilter("PNG", "*.png"));
     }
 
+    private void openFile(File file) {
+        try {
+            desktop.open(file);
+        } catch (IOException ex) {
+            // Logger.getLogger(FileChooserSample.class.getName()).log(
+            // Level.SEVERE, null, ex
+            System.out.println(ex);
+
+        }
+    }
 }
