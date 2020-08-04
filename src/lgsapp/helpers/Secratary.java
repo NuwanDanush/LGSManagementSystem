@@ -77,5 +77,47 @@ public class Secratary{
     public void setIncdate(String incdate) {
         this.incdate = incdate;
     }
+    public void setInc(String inc) {
+        this.inc = inc;
+    }
 
+    public void setBeg(String beg) {
+        this.beg = beg;
+    }
+
+    public void setMid(String mid) {
+        this.mid = mid;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public String getWop() {
+        return wop;
+    }
+
+    public String getOffice() {
+        return office;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getBday() {
+        return bday;
+    }
 }
