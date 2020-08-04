@@ -35,6 +35,16 @@ public class Secratary{
         this.end = end;
     }
 
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
 
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+
+    public void setWop(String wop) {
+        this.wop = wop;
+    }
 
 }
