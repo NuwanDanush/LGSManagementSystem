@@ -46,5 +46,36 @@ public class Secratary{
     public void setWop(String wop) {
         this.wop = wop;
     }
+    public void setOffice(String office) {
+        this.office = office;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setBday(String bday) {
+        this.bday = bday;
+    }
+
+    public void setFappdate(String fappdate) {
+        this.fappdate = fappdate;
+    }
+
+    public void setUpgradedate(String upgradedate) {
+        this.upgradedate = upgradedate;
+    }
+
+    public void setRetdate(String retdate) {
+        this.retdate = retdate;
+    }
+
+    public void setIncdate(String incdate) {
+        this.incdate = incdate;
+    }
 
 }
