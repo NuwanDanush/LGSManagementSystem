@@ -82,5 +82,15 @@
 
             </children>
         </Pane>
+        <VBox layoutX="320.0" style="-fx-background-color: #0C39FF;">
+
+              <children>
+
+
+                  <fx:include source="title_bar.fxml" />
+
+              </children>
+          </VBox>
+
     </children>
 </AnchorPane>
