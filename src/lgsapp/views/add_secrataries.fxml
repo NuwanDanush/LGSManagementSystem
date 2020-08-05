@@ -13,3 +13,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="788.0" prefWidth="435.0" style="-fx-background-color:  #0C39FF;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lgsapp.controlers.AddSecController">
+    <children>
+        
+    </children>
+</AnchorPane>
