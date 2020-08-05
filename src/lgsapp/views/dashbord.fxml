@@ -14,3 +14,43 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="618.0" prefWidth="1359.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lgsapp.controlers.DashbordControll">
+    <children>
+        <Pane prefHeight="135.0" prefWidth="1000.0" style="-fx-background-color: #2D75E8;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <effect>
+                <DropShadow />
+            </effect>
+            <children>
+                <HBox prefHeight="100.0" prefWidth="200.0">
+                    <children>
+                        <!-- <VBox onMouseDragged="#dragged" onMousePressed="#pressed" style="-fx-background-color: WHITE;" HBox.hgrow="ALWAYS" />-->
+                    </children>
+                </HBox>
+                <!-- <fx:include source="title_bar.fxml" />-->
+                <Label layoutY="17.0" text="  Local Government" textFill="WHITE">
+                    <font>
+                        <Font size="48.0" />
+                    </font>
+                </Label>
+                <Label layoutX="28.0" layoutY="91.0" text="Secretaries Mangement " textFill="WHITE">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                </Label>
+
+                <VBox onMouseDragged="#dragged" onMousePressed="#pressed" style="-fx-background-color: #2D75E8;" HBox.hgrow="ALWAYS" />
+                <VBox layoutX="830.0" prefHeight="60.0" prefWidth="527.0" style="-fx-background-color:  #2D75E8;">
+                            <children>
+                                <fx:include source="title_bar.fxml" />
+                            </children>
+                 </VBox>
+
+
+               <!--<FontAwesomeIconView fill="WHITE" layoutX="53.0" layoutY="103.0" size="60" />-->
+            </children>
+        </Pane>
+        
+      <GlyphsStack prefHeight="150.0" prefWidth="200.0" />
+    </children>
+</AnchorPane>
