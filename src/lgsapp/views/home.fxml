@@ -15,3 +15,19 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="707.0" prefWidth="1101.0" style="-fx-background-color: #FFF;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lgsapp.controlers.HomeController">
+    <children>
+
+        <VBox onMouseDragged="#dragged" onMousePressed="#pressed" style="-fx-background-color: WHITE;" HBox.hgrow="ALWAYS" />
+        <VBox layoutX="988.0" layoutY="-3.0" prefHeight="59.0" prefWidth="383.0" style="-fx-background-color:  WHITE;">
+            <children>
+
+
+                <fx:include source="title_bar.fxml" />
+            </children>
+        </VBox>
+
+    </children>
+</AnchorPane>
